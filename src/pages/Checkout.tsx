@@ -1,4 +1,4 @@
-import { Autocomplete, Box, Button, CircularProgress, Grid, Sheet, Table, Typography } from "@mui/joy"
+import { Autocomplete, Box, Button, CircularProgress, Sheet, Table, Typography } from "@mui/joy"
 import { Product } from "../interfaces/Product"
 import { useState } from "react"
 import { useFetch } from "../hooks/useFetch";
