@@ -28,7 +28,7 @@ export const Products = () => {
             alignItems: 'center',
             justifyContent: 'center'
         }}>
-            <Typography level='h3'>Selecione os items para retirada</Typography>
+            <Typography level='h3' mb={2}>Produtos em estoque</Typography>
             <Grid
                 container
                 spacing={{ xs: 2, md: 3 }}

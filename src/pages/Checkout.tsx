@@ -31,15 +31,19 @@ export const Checkout = () => {
                 display: 'flex',
                 flexDirection: 'column',
             }}>
-                <Typography>Selecione os produtos:</Typography>
+                <Typography level='h3' mb={2}>Realize sua venda</Typography>
+                <Typography>Selecione o(s) produto(s):</Typography>
                 <Autocomplete
                     multiple
                     placeholder="items em estoque"
                     options={products}
                     getOptionLabel={option => option.name}
                     onChange={(e, items: Product[]) => setSelectedProducts(items)}
+                    sx={{
+                        marginBottom: '2rem'
+                    }}
                 />
-                <Typography level='h3'>Itens em compra:</Typography>
+                <Typography>Confira os produtos:</Typography>
                 <Sheet>
                     <Table
                     borderAxis="x"

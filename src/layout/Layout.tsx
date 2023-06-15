@@ -36,7 +36,9 @@ export const Layout = () => {
                     <Button variant='solid' sx={{width: '100%'}} onClick={handleProducts}>Vender</Button>
                 </SideNav>
             </Grid>
-            <Grid>
+            <Grid sx={{
+                padding: '2rem'
+            }}>
                 <Outlet />
             </Grid>
             <Grid></Grid>

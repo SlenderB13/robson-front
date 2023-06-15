@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardOverflow, Typography } from "@mui/joy"
+import { Card, CardContent, Typography } from "@mui/joy"
 import { Product } from "../interfaces/Product"
 
 export const ProductCard = ({name, price, amount}: Product) => {
@@ -13,9 +13,6 @@ export const ProductCard = ({name, price, amount}: Product) => {
                 (<b>{amount}</b> em estoque)
                 </Typography>
             </CardContent>
-            <CardOverflow>
-                <Button variant="solid" color="danger" size="lg">Selecionar</Button>
-            </CardOverflow>
         </Card>
     )
 }

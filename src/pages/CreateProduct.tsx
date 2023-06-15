@@ -1,4 +1,4 @@
-import { Box, Button, Sheet, Textarea, Typography } from "@mui/joy"
+import { Box, Button, FormLabel, Input, Sheet, Textarea, Typography } from "@mui/joy"
 import React, { useState } from "react"
 import { Product } from "../interfaces/Product"
 
@@ -26,18 +26,23 @@ export const CreateProduct = () => {
        }}>
         <Box>
             <Box>
-                <Typography level='body1'>Preencha as informações</Typography>
+                <Typography 
+                    level='h3'
+                    mb={2}
+                >Cadastro de produto</Typography>
             </Box>
             <Box>
                 <form onSubmit={handleSubmit}>
+                    <FormLabel>Nome do produto:</FormLabel>
                     <Textarea
-                        placeholder="Qual o nome do produto?"
+                        placeholder="Ex: Motorola Razr 256GB"
                         required
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProductName(e.target.value)}
                         sx={{ mb: 1 }}
                     />
+                    <FormLabel>Preço do produto:</FormLabel>
                     <Textarea
-                        placeholder="Qual o valor do produto?"
+                        placeholder="Ex: 1.999"
                         required
                         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setProductPrice(parseFloat(e.target.value))}
                         sx={{ mb: 1 }}

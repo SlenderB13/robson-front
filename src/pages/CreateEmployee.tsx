@@ -1,4 +1,4 @@
-import { Box, Button, Sheet, Textarea, Typography } from "@mui/joy"
+import { Box, Button, FormLabel, Sheet, Textarea, Typography } from "@mui/joy"
 import React, { useState } from "react"
 
 export const CreateEmployee = () => {
@@ -14,12 +14,16 @@ export const CreateEmployee = () => {
        }}>
         <Box>
             <Box>
-                <Typography level='body1'>Preencha as informações</Typography>
+                <Typography 
+                    level='h3'
+                    mb={2}
+                >Cadastro de funcionário</Typography>
             </Box>
             <Box>
                 <form onSubmit={handleSubmit}>
+                    <FormLabel>Nome do funcionário:</FormLabel>
                     <Textarea
-                        placeholder="Qual o nome do funcionário?"
+                        placeholder="Ex: Robson (belo nome)"
                         required
                         onChange={(e) => setEmployeeName(e.target.value)}
                         sx={{ mb: 1 }}
