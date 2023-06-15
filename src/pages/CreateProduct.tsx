@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, FormLabel, Sheet, Textarea, Typography } from "@mui/joy"
+import { Alert, Box, Button, CircularProgress, FormLabel, Sheet, Textarea, Typography } from "@mui/joy"
 import React, { useState } from "react"
 import { Product } from "../interfaces/Product"
 import axios, { AxiosResponse } from "axios"
@@ -10,6 +10,7 @@ export const CreateProduct = () => {
     const [productAmount, setProductAmount] = useState<number>(0)
     const [product, setProduct] = useState<Product | null>(null)
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [notification, setNotification] = useState<string | null>(null)
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         setProduct({
@@ -27,7 +28,11 @@ export const CreateProduct = () => {
 
         axios.post(`${import.meta.env.VITE_REACT_APP_BASE_URL}/products`, product)
         .then((response: AxiosResponse) => {
-            console.log(response)
+            if (response.status === 200) {
+                setNotification('Produto incluído!')
+            } else {
+                setNotification('Erro ao incluir produto!')
+            }
         })
         .catch((err) => 
             console.log(err)
@@ -41,6 +46,18 @@ export const CreateProduct = () => {
        <Sheet sx={{
         width: '50rem'
        }}>
+        {notification && (
+            <Alert
+                variant="soft"
+                color="success"
+                sx={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '1rem'
+                }}>
+                {notification}
+            </Alert>
+        )}
         <Box>
             <Box>
                 <Typography 
