@@ -1,27 +1,12 @@
 import { Autocomplete, Box, Grid, Sheet, Table, Typography } from "@mui/joy"
 import { Product } from "../interfaces/Product"
 import { useState } from "react"
+import { useFetch } from "../hooks/useFetch";
 
 export const Checkout = () => {
-    const [selectedProducts, setSelectedProducts] = useState<Product[] | []>([]);
+    const [selectedProducts, setSelectedProducts] = useState<Product[] | null>(null);
 
-    const products: Product[] = [
-        {
-            "name": "Z Flip 3",
-            "price": 4.999,
-            "amount": 2
-        },
-        {
-            "name": "Z Flip 4",
-            "price": 6.999,
-            "amount": 1
-        },
-        {
-            "name": "Galaxy Fold",
-            "price": 7.999,
-            "amount": 4
-        }
-    ]
+    const products = useFetch<Product[]>('products')
 
     return (
         <Box sx={{
@@ -36,7 +21,7 @@ export const Checkout = () => {
                 <Autocomplete
                     multiple
                     placeholder="items em estoque"
-                    options={products}
+                    options={products ? products : []}
                     getOptionLabel={option => option.name}
                     onChange={(e, items: Product[]) => setSelectedProducts(items)}
                     sx={{
@@ -48,7 +33,7 @@ export const Checkout = () => {
                     <Table
                     borderAxis="x"
                     color="neutral"
-                    size="sm"
+                    size="lg"
                     stickyFooter
                     stickyHeader
                     stripe="even"
@@ -57,19 +42,25 @@ export const Checkout = () => {
                         <thead>
                             <tr>
                                 <th>Produto</th>
-                                <th>Quantidade</th>
                                 <th>Valor</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {selectedProducts.map((product, index) => (
+                        {selectedProducts?.map((product, index) => (
                             <tr key={index}>
                                 <td>{product.name}</td>
-                                <td>{product.amount}</td>
                                 <td>{product.price}</td>
                             </tr>
                         ))}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>TOTAL:</th>
+                                <td>
+                                    {selectedProducts?.reduce((actualPrice=0, product) => actualPrice + product.price, 0)}
+                                </td>
+                            </tr>
+                        </tfoot>
                     </Table>
                 </Sheet>
             </Box>
