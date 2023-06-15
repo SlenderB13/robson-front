@@ -1,12 +1,19 @@
-import { Autocomplete, Box, Grid, Sheet, Table, Typography } from "@mui/joy"
+import { Autocomplete, Box, Button, Grid, Sheet, Table, Typography } from "@mui/joy"
 import { Product } from "../interfaces/Product"
 import { useState } from "react"
 import { useFetch } from "../hooks/useFetch";
+import { useDelete } from "../hooks/useDelete";
 
 export const Checkout = () => {
     const [selectedProducts, setSelectedProducts] = useState<Product[] | null>(null);
 
     const products = useFetch<Product[]>('products')
+
+    const handleCheckout = () => {
+        selectedProducts?.map((product) => {
+            useDelete('products', product?.id)
+        })
+    }
 
     return (
         <Box sx={{
@@ -29,7 +36,9 @@ export const Checkout = () => {
                     }}
                 />
                 <Typography>Confira os produtos:</Typography>
-                <Sheet>
+                <Sheet sx={{
+                    marginBottom: '2rem'
+                }}>
                     <Table
                     borderAxis="x"
                     color="neutral"
@@ -63,6 +72,10 @@ export const Checkout = () => {
                         </tfoot>
                     </Table>
                 </Sheet>
+                <Button 
+                    disabled={!selectedProducts ? true : false}
+                    onClick={handleCheckout}
+                >Finalizar venda</Button>
             </Box>
         </Box>
     )
