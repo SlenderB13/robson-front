@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios"
-import { useEffect, useState } from "react"
 
 export const useInsert = <T>(data: T, url: string) => {
 
