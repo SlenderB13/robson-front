@@ -1,24 +1,58 @@
-import { Autocomplete, Box, Button, CircularProgress, Sheet, Table, Typography } from "@mui/joy"
+import { Alert, Autocomplete, Box, Button, CircularProgress, Sheet, Table, Typography } from "@mui/joy"
 import { Product } from "../interfaces/Product"
 import { useState } from "react"
 import { useFetch } from "../hooks/useFetch";
-import { useDelete } from "../hooks/useDelete";
+import axios, { AxiosResponse } from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const Checkout = () => {
     const [selectedProducts, setSelectedProducts] = useState<Product[] | null>(null);
+    const [checkoutLoading, setCheckoutLoading] = useState<boolean>(false)
+    const [notification, setNotification] = useState<string | null>(null)
 
     const {data: products, isLoading} = useFetch<Product[]>('products')
 
+    const navigate = useNavigate()
+
     const handleCheckout = () => {
+        setCheckoutLoading(true)
         selectedProducts?.map((product) => {
-            useDelete('products', product?.id)
+            //useDelete('products', product?.id)
+            axios.delete(`${import.meta.env.VITE_REACT_APP_BASE_URL}/products/${product.id}`)
+            .then((response: AxiosResponse) => {
+                if (response.status === 200) {
+                    setNotification('Venda realizada!')
+                    navigate('/products')
+                } else {
+                    setNotification('Erro ao realizar venda!')
+                }
+            })
+            .catch((err) => 
+                console.log(err)
+            )
+            .finally(() => {
+                setCheckoutLoading(false)
+            })
         })
     }
 
     return (
         <Box sx={{
             width: '50rem'
-        }}>
+        }}>        
+            {notification && (
+                <Alert
+                    variant="soft"
+                    color="success"
+                    sx={{
+                        position: 'absolute',
+                        left: '50%',
+                        top: '1rem'
+                    }}>
+                    {notification}
+                </Alert>
+            )}
+ 
             {!isLoading ? (
                 <Box component='section' sx={{
                     display: 'flex',
@@ -76,6 +110,9 @@ export const Checkout = () => {
                     <Button 
                         disabled={!selectedProducts ? true : false}
                         onClick={handleCheckout}
+                        startDecorator={checkoutLoading && (
+                            <CircularProgress thickness={2} />
+                        )}
                     >Finalizar venda</Button>
                 </Box>
 
